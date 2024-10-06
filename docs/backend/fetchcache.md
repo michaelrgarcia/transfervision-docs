@@ -94,7 +94,7 @@ Once a match is found, the generator is streamed through functionality derived f
 
 ## Finalization
 
-There is special "finalization" logic as a result of [cost-saving methods]. It's supposed to be more of a trade-off, but also addresses the case in which ```getArticulationData()``` on the frontend is somehow disrupted.
+There is special "finalization" logic as a result of [cost-saving methods](https://michaelrgarcia.github.io/transfervision-docs/docs/backend/costsavers.html). It's supposed to be more of a trade-off, but also addresses the case in which ```getArticulationData()``` on the frontend is somehow disrupted.
 
 ![image](https://github.com/user-attachments/assets/108d0c7e-9ed2-4699-b28a-fddd95aeb2d3)
 
