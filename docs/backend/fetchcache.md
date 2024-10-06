@@ -10,7 +10,7 @@ Before getting into this Lambda function's logic, a fundamental question needs t
 
 > Why aren't more ASSIST.org articulations cached in production?
 
-An operation like this is very slow and costly. This question also misinterprets TransferVision's goal of serving articulations for a *single class*. Most of this data would go unused, since certain classes may have a large amount of articulations across the California Community College system. I've tested approaches similar to this and have found that streaming articulation data from this Lambda function is the best course of action.
+An operation like this is very slow and costly. This question also misinterprets TransferVision's goal of serving articulations for a *single class*. Most of this data would go unused, since certain classes may have a large amount of articulations across the California Community College system. I've found that streaming articulation data from this Lambda function while caching it is the best course of action.
 
 With that aside, here is a diagram depicting this Lambda function's workflow. This happens 4 times in a single articulation fetching / caching job.
 
