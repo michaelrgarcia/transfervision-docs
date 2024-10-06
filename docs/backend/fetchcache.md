@@ -90,10 +90,20 @@ async function* getChunkJson(links, courseId, year) {
 }
 ```
 
-Once a match is found, the generator is streamed through functionality derived from this [documentation entry](https://nodejs.org/api/stream.html#streams-compatibility-with-async-generators-and-async-iterators). The articulation data is cached by its **fullCourseId**. This is a value consisting of the ```courseId``` and ```academicYear``` chosen on the frontend. 
+Once a match is found, the generator is streamed through functionality derived from this [documentation entry](https://nodejs.org/api/stream.html#streams-compatibility-with-async-generators-and-async-iterators). The articulation data is then cached by its **fullCourseId**. This is a value consisting of the ```courseId``` and ```academicYear``` chosen on the frontend. 
 
-## Cost-Saving Methodologies
+## Finalization
 
+There is special "finalization" logic as a result of [cost-saving methods]. It's supposed to be more of a trade-off, but also addresses the case in which ```getArticulationData()``` on the frontend is somehow disrupted.
 
+![image](https://github.com/user-attachments/assets/108d0c7e-9ed2-4699-b28a-fddd95aeb2d3)
+
+As shown in the diagram, the connection between the frontend and the Lambda function is disrupted while articulation data is being cached. This creates the possibility of a user obtaining incomplete articulation data.
+
+To address this, a separate Lambda function invoked by API Gateway changes the articulation data's "cacheStatus" DynamoDB attribute from "pending" to "complete" at the end of ```getArticulationData()```. 
+
+![image](https://github.com/user-attachments/assets/42e90cc8-c8b3-44bb-b740-b08e04b96a16)
+
+Any DynamoDB queries for articulation with cacheStatus "pending" will fail and automatically delete the pending articulation data after 2 minutes. This is a simpler approach than attempting to continue where ```getArticulationData()``` was cut off.
 
 ----
