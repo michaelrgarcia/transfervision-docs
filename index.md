@@ -10,5 +10,7 @@ TransferVision is a full-stack web application that allows a user to convenientl
 
 Rather than teaching the reader how to use TransferVision, this will be a technical overview of how TransferVision works behind the scenes. It is suggested to start reading about the [backend] first, as it is where most of TransferVision's operations take place.
 
+----
+
 [TransferVision]: https://github.com/michaelrgarcia/transfer-vision
 [ASSIST.org]: https://assist.org/
