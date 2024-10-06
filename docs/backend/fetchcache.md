@@ -90,7 +90,7 @@ async function* getChunkJson(links, courseId, year) {
 }
 ```
 
-Once a match is found, the generator is streamed through functionality derived from [this article](https://nodejs.org/api/stream.html#streams-compatibility-with-async-generators-and-async-iterators). The articulation data is cached by its **fullCourseId**. This is a value consisting of the ```courseId``` and ```academicYear``` chosen on the frontend. 
+Once a match is found, the generator is streamed through functionality derived from this [documentation entry](https://nodejs.org/api/stream.html#streams-compatibility-with-async-generators-and-async-iterators). The articulation data is cached by its **fullCourseId**. This is a value consisting of the ```courseId``` and ```academicYear``` chosen on the frontend. 
 
 ## Cost-Saving Methodologies
 
