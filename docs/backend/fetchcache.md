@@ -104,6 +104,6 @@ To address this, a separate Lambda function invoked by API Gateway changes the a
 
 ![image](https://github.com/user-attachments/assets/e6b75e16-cba1-4a17-8bad-d9a69f70c7fc)
 
-Any DynamoDB queries for articulations with cacheStatus "pending" will fail either until cacheStatus is "complete" or until the incomplete data is deleted after 2 miuntes. This is a simpler approach than attempting to continue where ```getArticulationData()``` left off.
+Any DynamoDB queries for articulations with cacheStatus "pending" will fail until cacheStatus is "complete" or until the incomplete data is deleted after 2 miuntes. This is a simpler approach than attempting to continue where ```getArticulationData()``` left off.
 
 ----
