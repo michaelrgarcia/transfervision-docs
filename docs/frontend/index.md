@@ -11,8 +11,6 @@ The frontend has two simple goals—fetch ASSIST data from AWS and render that d
 
 Most of the logic that needs explaining is the logic for [requesting articulations].
 
-move below section to new md file
-
 ---
 
 [TransferVision]: https://github.com/michaelrgarcia/transfer-vision
