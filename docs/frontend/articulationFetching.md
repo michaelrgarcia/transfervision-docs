@@ -139,7 +139,7 @@ async function processChunks(
 }
 ```
 
-As the name suggests, this function breaks up the ```processingQueue``` array into smaller chunks for the Lambda function. ```requestArticulations()``` then sends a POST request containing the endpoint links to the Lambda function and renders the streamed articulation data. All of this is done recursively until the ```processingQueue``` array is empty.
+As the name suggests, this function breaks up the ```processingQueue``` array into smaller chunks for the Lambda function. ```requestArticulations()``` then sends a POST request containing the endpoint links to the Lambda function and renders the streamed JSON response. All of this is done recursively until the ```processingQueue``` array is empty.
 
 For more information and reasoning regarding this choice, please view the [backend] documentation.
 
