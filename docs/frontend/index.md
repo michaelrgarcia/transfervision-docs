@@ -9,7 +9,7 @@ The frontend has two broad goals—fetch ASSIST data from AWS and render that da
 
 ![image](https://github.com/user-attachments/assets/72be3a54-c294-40fd-843a-9e9968d9dc35)
 
-Most of the logic that needs explaining is the logic for [requesting articulations].
+Most of the logic that needs explaining is the logic for [requesting articulations](https://michaelrgarcia.github.io/transfervision-docs/docs/frontend/articulationFetching.html).
 
 [TransferVision]: https://github.com/michaelrgarcia/transfer-vision
 [ASSIST.org]: https://assist.org/
