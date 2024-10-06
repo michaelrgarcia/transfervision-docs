@@ -6,7 +6,9 @@ parent: The frontend
 
 # Requesting articulations
 
-Most of the frontend's complexity lies in the way that articulation data is fetched. In the case where certain articulations don't already exist in DynamoDB, a Lambda function must fetch and cache articulations for future use. In order for the Lambda function to do this, it must receive an array containing ASSIST API endpoint links from the frontend.
+Most of the frontend's complexity lies in the way that articulation data is fetched. In the case where certain articulations don't already exist in DynamoDB, a Lambda function must fetch and cache articulations for future use. The entire process is outlined below.
+
+First, an array of endpoint links needs to be created.
 
 ```js
 // Creates an array of ASSIST API endpoint links and agreement links
@@ -22,7 +24,7 @@ async function getArticulationParams(receivingId, majorKey, year) {
     if (college.id) {
       const sending = college.id;
       const link = `${process.env.ASSIST_API_PARAMS}=${year}/${sending}/to/${receiving}/Major/${key}`;
-      const agreementLink = `${process.env.ASSIST_AGREEMENT_PARAMS}=${year}&institution=${sending}&agreement=${receiving}    &agreementType=to&view=agreement&viewBy=major&viewSendingAgreements=false&viewByKey=${year}/${sending}/to/${receiving}/Major/${key}`;
+      const agreementLink = `${process.env.ASSIST_AGREEMENT_PARAMS}=${year}&institution=${sending}&agreement=${receiving}&agreementType=to&view=agreement&viewBy=major&viewSendingAgreements=false&viewByKey=${year}/${sending}/to/${receiving}/Major/${key}`;
 
       articulationParams.push({ link, agreementLink });
     }
@@ -32,6 +34,6 @@ async function getArticulationParams(receivingId, majorKey, year) {
 }
 ```
 
-This function returns an array of objects containing ASSIST API endpoint links and agreement links. This array is then passed into the function that controls the fetch / rendering operation.
+This array is then passed into the function that controls the fetch / rendering operation.
 
 For more information and reasoning regarding this choice, please view the [backend] documentation.
