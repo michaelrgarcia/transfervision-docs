@@ -6,13 +6,11 @@ parent: The frontend
 
 # Requesting articulations
 
-Most of the frontend's complexity lies in the way that articulation data is fetched. In the case where certain articulations don't already exist in DynamoDB, a Lambda function must fetch and cache articulations for future use. The entire process is outlined below.
+Most of the frontend's complexity lies in the way that articulation data is fetched. If articulations don't already exist in DynamoDB, the frontend must salvage articulation data from a Lambda function while the function stores the articulations in DynamoDB. The entire process will be described below.
 
 First, an array of endpoint links needs to be created.
 
 ```js
-// Creates an array of ASSIST API endpoint links and agreement links
-
 async function getArticulationParams(receivingId, majorKey, year) {
   const articulationParams = [];
   const communityColleges = await getCommunityColleges();
@@ -35,5 +33,60 @@ async function getArticulationParams(receivingId, majorKey, year) {
 ```
 
 This array is then passed into the function that controls the fetch / rendering operation.
+
+```js
+export async function getArticulationData(links, courseId, year) {
+  const fullCourseId = `${courseId}_${year}`; // Explained in the backend docs.
+  const processingQueue = links.slice(); // A shallow copy of "links" is needed for the progress tracker.
+
+  const abortController = new AbortController();
+  const { signal, isAborted } = abortHandler(abortController);
+
+  const updateProgress = createProgressTracker(links.length); // The amount of California Community Colleges may differ in the future.
+
+  let articulations;
+
+  window.addEventListener("beforeunload", () => abortController.abort());
+
+  showResults();
+  updateProgress(0);
+
+  try {
+    articulations = await getClassFromDb(
+      fullCourseId,
+      links.length,
+      updateProgress,
+    );
+
+    if (!articulations) {
+      articulations = await processChunks(
+        processingQueue,
+        signal,
+        courseId,
+        updateProgress,
+        year,
+      );
+
+      hideLoadingContainer();
+
+      if (!isAborted) {
+        await finalizeSearch(fullCourseId, articulations); // Segues into the backend docs.
+      }
+    }
+  } catch (error) {
+    if (error.name === "AbortError") {
+      console.log("requests aborted due to page unload");
+    } else {
+      console.error("error processing requests", error);
+    }
+  } finally {
+    window.removeEventListener("beforeunload", () => abortController.abort());
+  }
+
+  return { articulations, updateProgress };
+}
+```
+
+For now, we'll focus on the function ```js processChunks()```.
 
 For more information and reasoning regarding this choice, please view the [backend] documentation.
