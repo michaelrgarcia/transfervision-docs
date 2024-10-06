@@ -16,7 +16,7 @@ With that aside, here is a diagram depicting this Lambda function's workflow. Th
 
 ![72be3a54-c294-40fd-843a-9e9968d9dc35](https://github.com/user-attachments/assets/26025cf8-7e0e-4ad4-bdc6-22f28e347ed3)
 
-As it seems, this diagram is the same one shown in the frontend section of this documentation. The frontend plays a role of equal weight in this operation, as it sends the Lambda function the chunks of links to make requests with and **finalizes** the caching job.
+As it seems, this diagram is the same one shown in the frontend section of this documentation. The frontend plays a role of equal weight in this operation, as it sends the Lambda function chunks of links to make requests with and **finalizes** the caching job.
 
 The "finalization" of the caching job will be addressed shortly. Let's first address each step prior to this.
 
