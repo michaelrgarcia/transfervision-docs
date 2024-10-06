@@ -87,6 +87,6 @@ export async function getArticulationData(links, courseId, year) {
 }
 ```
 
-For now, we'll focus on the function ```processChunks()```.
+Let's focus on the function ```processChunks()```.
 
 For more information and reasoning regarding this choice, please view the [backend] documentation.
