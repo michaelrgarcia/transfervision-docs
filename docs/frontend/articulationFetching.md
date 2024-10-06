@@ -89,4 +89,58 @@ export async function getArticulationData(links, courseId, year) {
 
 Let's focus on the function ```processChunks()```.
 
+```js
+async function processChunks(
+  processingQueue,
+  signal,
+  courseId,
+  updateProgress,
+  year,
+  assistArticulations = [],
+) {
+  const concurrencyLimit = 29;
+
+  let linksChunk;
+
+  if (processingQueue.length === 0) return assistArticulations;
+
+  if (processingQueue.length < concurrencyLimit) {
+    linksChunk = processingQueue.splice(0, processingQueue.length - 1);
+  } else {
+    linksChunk = processingQueue.splice(0, concurrencyLimit);
+  }
+
+  try {
+    const streamArticulations = await requestArticulations(
+      linksChunk,
+      signal,
+      courseId,
+      year,
+      updateProgress,
+    );
+
+    assistArticulations.push(...streamArticulations);
+
+    return await processChunks(
+      processingQueue,
+      signal,
+      courseId,
+      updateProgress,
+      year,
+      assistArticulations,
+    ); // recursive call
+  } catch (error) {
+    if (error.name === "AbortError") {
+      console.log("aborted request");
+    } else {
+      console.error("error processing chunk:", error);
+    }
+  }
+}
+```
+
+As the name suggests, this function breaks up the ```processingQueue``` array into smaller chunks for the Lambda function. ```requestArticulations()``` then sends a POST request containing the endpoint links to the Lambda function and renders the streamed JSON response. All of this is done recursively until the ```processingQueue``` array is empty.
+
 For more information and reasoning regarding this choice, please view the [backend] documentation.
+
+----
