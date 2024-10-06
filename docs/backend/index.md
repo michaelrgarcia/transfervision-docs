@@ -5,7 +5,7 @@ nav_order: 3
 
 # The backend
 
-The backend is made unnecessarily complex due to the fact that it relies entirely on AWS services. Most of TransferVision's logic is facilitated here.
+The backend is made unnecessarily complex due to the fact that it relies entirely on AWS services. Through optimizations, these services are what allow me to keep costs at an abosolute minimum.
 
 TransferVision utilizes the following services:
 
